@@ -46,13 +46,13 @@ export function ProductCard({ product }: ProductCardProps) {
       <CardFooter className="p-4 pt-0 flex flex-col items-start space-y-4">
         <p className="font-semibold text-lg w-full">${product.price.toFixed(2)}</p>
         <div className="w-full grid grid-cols-2 gap-2">
-          <Button variant="outline" onClick={() => addToCart(product, 1)}>
-            <ShoppingCart />
-            <span>Add to Cart</span>
+          <Button variant="outline" size="sm" onClick={() => addToCart(product, 1)}>
+            <ShoppingCart className="mr-2 h-4 w-4" />
+            Add to Cart
           </Button>
-          <Button className="btn-cta" onClick={handleBuyNow}>
-            <ShoppingBag />
-            <span>Buy Now</span>
+          <Button size="sm" className="btn-cta" onClick={handleBuyNow}>
+            <ShoppingBag className="mr-2 h-4 w-4" />
+            Buy Now
           </Button>
         </div>
       </CardFooter>

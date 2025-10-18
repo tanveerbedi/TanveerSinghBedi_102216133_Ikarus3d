@@ -10,7 +10,7 @@ const productsData: Omit<Product, 'imageUrl' | 'imageHint'>[] = [
     category: 'Chairs',
     brand: 'Moderno',
     features: ['Ergonomic Design', 'Solid Ash Wood Frame', 'Linen Blend Upholstery'],
-    tags_cv: ['chair', 'furniture', 'wood', 'indoor'],
+    tags_cv: ['chair', 'furniture', 'wood', 'indoor', 'popular'],
     dominant_colors: ['#F5F5DC', '#D2B48C'],
     similar_ids: ['leather-armchair', 'blue-accent-chair'],
   },
@@ -22,7 +22,7 @@ const productsData: Omit<Product, 'imageUrl' | 'imageHint'>[] = [
     category: 'Tables',
     brand: 'Natura',
     features: ['Seats 6-8 people', 'Solid Oak Construction', 'Protective Varnish'],
-    tags_cv: ['table', 'dining', 'wood', 'furniture'],
+    tags_cv: ['table', 'dining', 'wood', 'furniture', 'trending'],
     dominant_colors: ['#8B4513', '#DEB887'],
     similar_ids: ['marble-coffee-table', 'scandinavian-desk'],
   },
@@ -34,7 +34,7 @@ const productsData: Omit<Product, 'imageUrl' | 'imageHint'>[] = [
     category: 'Sofas',
     brand: 'Opulence Home',
     features: ['High-Density Foam Cushions', 'Kiln-Dried Hardwood Frame', 'Emerald Green Velvet'],
-    tags_cv: ['sofa', 'green', 'velvet', 'living room'],
+    tags_cv: ['sofa', 'green', 'velvet', 'living room', 'trending'],
     dominant_colors: ['#006400', '#2E8B57'],
     similar_ids: [],
   },
@@ -58,7 +58,7 @@ const productsData: Omit<Product, 'imageUrl' | 'imageHint'>[] = [
     category: 'Tables',
     brand: 'Celestia',
     features: ['Genuine Carrara Marble Top', 'Brushed Brass Base', 'Geometric Design'],
-    tags_cv: ['coffee table', 'marble', 'modern', 'brass'],
+    tags_cv: ['coffee table', 'marble', 'modern', 'brass', 'popular'],
     dominant_colors: ['#FFFFFF', '#B8860B'],
     similar_ids: ['oak-dining-table', 'scandinavian-desk'],
   },
@@ -70,7 +70,7 @@ const productsData: Omit<Product, 'imageUrl' | 'imageHint'>[] = [
     category: 'Chairs',
     brand: 'Heritage',
     features: ['Top-Grain Aniline Leather', 'Down-Feather Cushions', 'Solid Walnut Legs'],
-    tags_cv: ['armchair', 'leather', 'brown', 'classic'],
+    tags_cv: ['armchair', 'leather', 'brown', 'classic', 'trending'],
     dominant_colors: ['#800000', '#A52A2A'],
     similar_ids: ['minimalist-lounge-chair', 'blue-accent-chair'],
   },
@@ -106,7 +106,7 @@ const productsData: Omit<Product, 'imageUrl' | 'imageHint'>[] = [
     category: 'Tables',
     brand: 'Nordic Work',
     features: ['Two Storage Drawers', 'Solid Birch Legs', 'White Lacquer Top'],
-    tags_cv: ['desk', 'scandinavian', 'office', 'wood'],
+    tags_cv: ['desk', 'scandinavian', 'office', 'wood', 'popular'],
     dominant_colors: ['#FFFFFF', '#E6D8AD'],
     similar_ids: ['oak-dining-table', 'marble-coffee-table'],
   },
@@ -151,7 +151,14 @@ const productsData: Omit<Product, 'imageUrl' | 'imageHint'>[] = [
 export const products: Product[] = productsData.map(p => {
   const placeholder = PlaceHolderImages.find(img => img.id === p.id);
   if (!placeholder) {
-    throw new Error(`No placeholder image found for product id: ${p.id}`);
+    // Fallback for items that don't have a specific image in placeholder-images.json
+    // This makes the data seeding more robust.
+    const genericImage = PlaceHolderImages.find(img => img.id === 'hero-background');
+    return {
+      ...p,
+      imageUrl: genericImage?.imageUrl || 'https://picsum.photos/seed/1/600/400',
+      imageHint: p.category.toLowerCase(),
+    };
   }
   return {
     ...p,
