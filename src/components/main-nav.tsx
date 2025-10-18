@@ -7,6 +7,7 @@ import { cn } from '@/lib/utils';
 import { Sofa, ShoppingCart } from 'lucide-react';
 import { useAuth } from '@/lib/auth';
 import { useCart } from '@/hooks/use-cart';
+import { SearchBar } from './search-bar';
 
 export function MainNav({
   className,
@@ -68,14 +69,16 @@ export function MainNav({
           </Link>
         ))}
       </div>
-      <div className="flex items-center space-x-4">
-        <Link href="/cart" className="relative text-muted-foreground hover:text-primary transition-colors">
+      <div className="flex items-center gap-2">
+        <SearchBar />
+        <Link href="/cart" className="relative text-muted-foreground hover:text-primary transition-colors p-2">
             <ShoppingCart className="h-5 w-5" />
             {itemCount > 0 && (
-                <span className="absolute -top-2 -right-2 flex h-4 w-4 items-center justify-center rounded-full bg-accent text-accent-foreground text-xs font-bold">
+                <span className="absolute -top-1 -right-1 flex h-4 w-4 items-center justify-center rounded-full bg-accent text-accent-foreground text-xs font-bold">
                     {itemCount}
                 </span>
             )}
+             <span className="sr-only">View Cart</span>
         </Link>
       </div>
     </nav>
