@@ -1,6 +1,6 @@
 'use client';
 import Link from 'next/link';
-import { Sofa, Github, Twitter, Linkedin } from 'lucide-react';
+import { Sofa, Github, Linkedin } from 'lucide-react';
 
 export function Footer() {
   return (
@@ -37,9 +37,8 @@ export function Footer() {
             <div>
               <h4 className="font-semibold mb-3">Connect</h4>
               <div className="flex space-x-4">
-                <a href="#" className="text-muted-foreground hover:text-primary"><Twitter className="h-5 w-5" /></a>
-                <a href="#" className="text-muted-foreground hover:text-primary"><Github className="h-5 w-5" /></a>
-                <a href="#" className="text-muted-foreground hover:text-primary"><Linkedin className="h-5 w-5" /></a>
+                <a href="https://github.com/tanveerbedi" target="_blank" rel="noopener noreferrer" className="text-muted-foreground hover:text-primary"><Github className="h-5 w-5" /></a>
+                <a href="https://www.linkedin.com/in/tanveersinghbedi/" target="_blank" rel="noopener noreferrer" className="text-muted-foreground hover:text-primary"><Linkedin className="h-5 w-5" /></a>
               </div>
             </div>
           </div>
