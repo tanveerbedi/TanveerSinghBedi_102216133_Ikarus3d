@@ -47,11 +47,11 @@ export function ProductCard({ product }: ProductCardProps) {
         <p className="font-semibold text-lg w-full">${product.price.toFixed(2)}</p>
         <div className="w-full grid grid-cols-2 gap-2">
           <Button variant="outline" onClick={() => addToCart(product, 1)}>
-            <ShoppingCart className="mr-2" />
+            <ShoppingCart />
             <span>Add to Cart</span>
           </Button>
           <Button className="btn-cta" onClick={handleBuyNow}>
-            <ShoppingBag className="mr-2" />
+            <ShoppingBag />
             <span>Buy Now</span>
           </Button>
         </div>
