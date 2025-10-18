@@ -1,6 +1,6 @@
 'use client';
 import { useState } from 'react';
-import { Dialog, DialogContent } from '@/components/ui/dialog';
+import { Dialog, DialogContent, DialogDescription, DialogHeader, DialogTitle } from '@/components/ui/dialog';
 import { Tooltip, TooltipContent, TooltipProvider, TooltipTrigger } from '@/components/ui/tooltip';
 import { Button } from '@/components/ui/button';
 import { Bot, X } from 'lucide-react';
@@ -30,6 +30,12 @@ export function FloatingChat() {
 
       <Dialog open={isOpen} onOpenChange={setIsOpen}>
         <DialogContent className="p-0 border-0 max-w-md h-[70vh] flex flex-col gap-0 rounded-xl overflow-hidden shadow-2xl">
+          <DialogHeader className="sr-only">
+            <DialogTitle>AI Assistant</DialogTitle>
+            <DialogDescription>
+              Chat with our AI assistant to get furniture recommendations.
+            </DialogDescription>
+          </DialogHeader>
           <ChatRecommendations />
           <Button
             variant="ghost"
