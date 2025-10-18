@@ -10,15 +10,15 @@ import { useState } from 'react';
 export function LoginForm() {
   const { login } = useAuth();
   const router = useRouter();
-  const [email, setEmail] = useState('admin@example.com');
-  const [password, setPassword] = useState('password');
+  const [email, setEmail] = useState('tbedi_be22@thapar.edu');
+  const [password, setPassword] = useState('tanveer123');
   const [error, setError] = useState('');
 
   const handleLogin = (e: React.FormEvent) => {
     e.preventDefault();
     setError('');
     // In a real app, you'd validate credentials against a backend
-    if (email === 'admin@example.com' && password === 'password') {
+    if (email === 'tbedi_be22@thapar.edu' && password === 'tanveer123') {
         login(true); // Mock login as admin
         router.push('/admin/dashboard');
     } else {
