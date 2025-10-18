@@ -4,20 +4,20 @@
 
 @layer base {
   :root {
-    --background: 40 25% 96.1%;
+    --background: 40 33% 97%; /* #FAF7F2 */
     --foreground: 20 14.3% 4.1%;
-    --card: 40 25% 96.1%;
+    --card: 40 33% 97%;
     --card-foreground: 20 14.3% 4.1%;
-    --popover: 40 25% 96.1%;
+    --popover: 40 33% 97%;
     --popover-foreground: 20 14.3% 4.1%;
-    --primary: 0 0% 11.4%;
+    --primary: 0 0% 11.4%; /* #1E1E1E */
     --primary-foreground: 0 0% 98%;
     --secondary: 20 5.9% 90%;
     --secondary-foreground: 20 14.3% 4.1%;
     --muted: 20 5.9% 94%;
     --muted-foreground: 20 8% 40%;
-    --accent: 30.1 52.9% 64.9%;
-    --accent-foreground: 20 14.3% 4.1%;
+    --accent: 30.1 52.9% 64.9%; /* #D4A373 */
+    --accent-foreground: 0 0% 11.4%;
     --destructive: 0 84.2% 60.2%;
     --destructive-foreground: 0 0% 98%;
     --border: 20 5.9% 85%;
@@ -38,14 +38,14 @@
     --card-foreground: 20 5% 95%;
     --popover: 20 10% 10%;
     --popover-foreground: 20 5% 95%;
-    --primary: 0 0% 98%;
-    --primary-foreground: 0 0% 11.4%;
+    --primary: 0 0% 98%; /* Lighter for dark mode */
+    --primary-foreground: 0 0% 11.4%; /* #1E1E1E */
     --secondary: 20 10% 20%;
     --secondary-foreground: 20 5% 95%;
     --muted: 20 10% 20%;
     --muted-foreground: 20 5% 65%;
-    --accent: 30.1 52.9% 64.9%;
-    --accent-foreground: 20 5% 95%;
+    --accent: 30.1 52.9% 64.9%; /* #D4A373 */
+    --accent-foreground: 0 0% 11.4%;
     --destructive: 0 62.8% 30.6%;
     --destructive-foreground: 0 0% 98%;
     --border: 20 10% 30%;
@@ -65,7 +65,29 @@
   }
   body {
     @apply bg-background text-foreground;
+    background-image: url("/textures/fabric-pattern.png");
+    background-size: 400px;
   }
+  html {
+    scroll-behavior: smooth;
+  }
+}
+
+@layer utilities {
+    .animate-fade-in-up {
+        animation: fade-in-up 0.8s ease-out forwards;
+    }
+
+    @keyframes fade-in-up {
+        from {
+            opacity: 0;
+            transform: translateY(20px);
+        }
+        to {
+            opacity: 1;
+            transform: translateY(0);
+        }
+    }
 }
 
 @layer components {

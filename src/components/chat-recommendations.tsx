@@ -26,10 +26,17 @@ export function ChatRecommendations() {
   const [isLoading, setIsLoading] = useState(false);
   const scrollAreaRef = useRef<HTMLDivElement>(null);
 
-  useEffect(() => {
+  const scrollToBottom = () => {
     if (scrollAreaRef.current) {
-      scrollAreaRef.current.scrollTop = scrollAreaRef.current.scrollHeight;
+        const viewport = scrollAreaRef.current.querySelector('div');
+        if (viewport) {
+            viewport.scrollTop = viewport.scrollHeight;
+        }
     }
+  };
+
+  useEffect(() => {
+    scrollToBottom();
   }, [messages]);
 
   const handleSendMessage = async (e: React.FormEvent) => {
@@ -78,8 +85,8 @@ export function ChatRecommendations() {
   };
 
   return (
-    <div className="flex flex-col h-full">
-      <div className="p-4 border-b flex items-center gap-2 bg-card/80">
+    <div className="flex flex-col h-full bg-card text-card-foreground">
+      <div className="p-4 border-b flex items-center gap-2">
         <Sparkles className="h-6 w-6 text-primary" />
         <h2 className="text-lg font-semibold">AI Assistant</h2>
       </div>
@@ -87,16 +94,16 @@ export function ChatRecommendations() {
         <div className="p-4 space-y-4">
           {messages.map((message, index) => (
             <div key={index} className={`flex items-start gap-3 text-sm ${message.role === 'user' ? 'justify-end' : ''}`}>
-              {message.role === 'bot' && <div className="p-1.5 rounded-full bg-primary/10 text-primary"><Bot className="h-5 w-5 flex-shrink-0" /></div>}
+              {message.role === 'bot' && <div className="p-1.5 rounded-full bg-primary/10 text-primary flex-shrink-0"><Bot className="h-5 w-5" /></div>}
               <div className={`rounded-lg p-3 max-w-xs md:max-w-sm ${message.role === 'user' ? 'bg-primary text-primary-foreground' : 'bg-muted'}`}>
                 {message.content}
               </div>
-              {message.role === 'user' && <div className="p-1.5 rounded-full bg-muted"><User className="h-5 w-5 flex-shrink-0" /></div>}
+              {message.role === 'user' && <div className="p-1.5 rounded-full bg-muted flex-shrink-0"><User className="h-5 w-5" /></div>}
             </div>
           ))}
           {isLoading && (
             <div className="flex items-start gap-3">
-              <div className="p-1.5 rounded-full bg-primary/10 text-primary"><Bot className="h-5 w-5 flex-shrink-0" /></div>
+              <div className="p-1.5 rounded-full bg-primary/10 text-primary flex-shrink-0"><Bot className="h-5 w-5" /></div>
               <div className="rounded-lg p-3 bg-muted flex items-center space-x-2">
                 <Loader2 className="h-4 w-4 animate-spin" />
                 <span>Finding products...</span>
@@ -106,7 +113,7 @@ export function ChatRecommendations() {
         </div>
       </ScrollArea>
       <Separator />
-      <div className="p-2 sm:p-4 bg-card/80">
+      <div className="p-2 sm:p-4">
         <form onSubmit={handleSendMessage} className="flex items-center gap-2">
           <Input
             value={input}

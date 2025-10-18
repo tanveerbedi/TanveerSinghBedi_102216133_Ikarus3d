@@ -4,12 +4,18 @@ import { getProducts } from '@/lib/data';
 import Link from 'next/link';
 import Image from 'next/image';
 import { Button } from '@/components/ui/button';
-import { ArrowRight } from 'lucide-react';
+import { ArrowRight, Bot, Star, Package, ThumbsUp } from 'lucide-react';
 import { PlaceHolderImages } from '@/lib/placeholder-images';
+import { CategoryShowcase } from '@/components/category-showcase';
+import { TrendingCarousel } from '@/components/trending-carousel';
+import { Newsletter } from '@/components/newsletter';
+import { FloatingChat } from '@/components/floating-chat';
+import { Footer } from '@/components/footer';
 
 export default async function Home() {
   const allProducts = await getProducts();
   const featuredProducts = allProducts.slice(0, 4);
+  const trendingProducts = allProducts.filter(p => (p.tags_cv?.includes('trending') || p.tags_cv?.includes('popular'))).slice(0, 6);
 
   const heroImage = PlaceHolderImages.find(p => p.id === 'hero-background');
 
@@ -26,13 +32,13 @@ export default async function Home() {
                     data-ai-hint={heroImage.imageHint}
                     priority
                 />
-                <div className="absolute inset-0 bg-gradient-to-r from-black/60 to-black/20" />
+                <div className="absolute inset-0 bg-gradient-to-r from-black/70 to-black/20" />
             </div>
         )}
         <div className="relative container mx-auto px-4 py-12 md:py-24 lg:py-32">
-            <div className="grid gap-6 lg:grid-cols-[1fr_400px] lg:gap-12 xl:grid-cols-[1fr_500px]">
-                <div className="flex flex-col justify-center space-y-4">
-                    <div className="space-y-4">
+            <div className="grid gap-6 lg:grid-cols-2 lg:gap-12 xl:grid-cols-[1fr_500px]">
+                <div className="flex flex-col justify-center space-y-6">
+                    <div className="space-y-4 animate-fade-in-up">
                         <h1 className="text-4xl font-bold tracking-tighter text-white sm:text-5xl xl:text-6xl/none font-headline">
                             Find Your Perfect Furniture, Instantly.
                         </h1>
@@ -40,20 +46,22 @@ export default async function Home() {
                             Describe what you're looking for, and our AI will find the best matches from our collection. Let's furnish your dream space together.
                         </p>
                     </div>
-                    <div className="w-full max-w-lg space-y-2">
-                        <p className="text-sm text-gray-300 italic">
-                            e.g., "I need a comfy, three-seater sofa for a modern living room, preferably in a neutral color."
-                        </p>
+                    <div className="flex flex-col sm:flex-row gap-4">
+                        <Link href="#featured-products">
+                            <Button size="lg" variant="outline" className="bg-transparent text-white border-white hover:bg-white hover:text-black">
+                                Start Exploring
+                            </Button>
+                        </Link>
                     </div>
                 </div>
-                <div className="rounded-xl border border-white/10 bg-card/80 backdrop-blur-sm text-card-foreground shadow-lg overflow-hidden h-[500px]">
-                    <ChatRecommendations />
-                </div>
+                {/* The ChatRecommendations component is now rendered via FloatingChat */}
             </div>
         </div>
       </section>
 
-      <section className="py-16 md:py-24">
+      <CategoryShowcase />
+
+      <section id="featured-products" className="py-16 md:py-24 bg-background">
         <div className="container mx-auto px-4">
             <div className="flex items-center justify-between mb-8">
             <h2 className="text-3xl font-bold tracking-tight font-headline">Featured Products</h2>
@@ -71,6 +79,37 @@ export default async function Home() {
             </div>
         </div>
       </section>
+      
+      <section className="py-16 md:py-24 bg-muted/30">
+        <div className="container mx-auto px-4">
+          <h2 className="text-3xl font-bold tracking-tight font-headline text-center mb-12">Why Choose FurniVerse?</h2>
+          <div className="grid grid-cols-1 md:grid-cols-3 gap-8">
+            <div className="text-center p-6">
+              <Star className="mx-auto h-10 w-10 text-accent mb-4"/>
+              <h3 className="text-xl font-semibold mb-2">AI-Powered Recommendations</h3>
+              <p className="text-muted-foreground">Get furniture tailored to your taste and space instantly.</p>
+            </div>
+            <div className="text-center p-6">
+              <Package className="mx-auto h-10 w-10 text-accent mb-4"/>
+              <h3 className="text-xl font-semibold mb-2">Fast, Secure Delivery</h3>
+              <p className="text-muted-foreground">From checkout to doorstep in days, not weeks.</p>
+            </div>
+            <div className="text-center p-6">
+              <ThumbsUp className="mx-auto h-10 w-10 text-accent mb-4"/>
+              <h3 className="text-xl font-semibold mb-2">Quality Guarantee</h3>
+              <p className="text-muted-foreground">Every piece crafted to last for years to come.</p>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      {trendingProducts.length > 0 && <TrendingCarousel products={trendingProducts} />}
+
+      <Newsletter />
+
+      <Footer />
+
+      <FloatingChat />
     </>
   );
 }
