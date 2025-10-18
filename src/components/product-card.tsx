@@ -42,18 +42,18 @@ export function ProductCard({ product }: ProductCardProps) {
           <h3 className="font-semibold text-lg leading-tight truncate font-headline">{product.name}</h3>
           <p className="text-sm text-muted-foreground">{product.brand}</p>
         </CardContent>
-        <CardFooter className="p-4 pt-0 flex flex-col items-start space-y-4">
-          <p className="font-semibold text-lg w-full">${product.price.toFixed(2)}</p>
-          <div className="w-full grid grid-cols-2 gap-2">
-            <Button variant="outline" onClick={() => addToCart(product, 1)}>
-              <ShoppingCart className="mr-2 h-4 w-4" /> Add to Cart
-            </Button>
-            <Button className="btn-cta" onClick={handleBuyNow}>
-              <ShoppingBag className="mr-2 h-4 w-4" /> Buy Now
-            </Button>
-          </div>
-        </CardFooter>
       </Link>
+      <CardFooter className="p-4 pt-0 flex flex-col items-start space-y-4">
+        <p className="font-semibold text-lg w-full">${product.price.toFixed(2)}</p>
+        <div className="w-full grid grid-cols-2 gap-2">
+          <Button variant="outline" onClick={() => addToCart(product, 1)}>
+            <ShoppingCart /> Add to Cart
+          </Button>
+          <Button className="btn-cta" onClick={handleBuyNow}>
+            <ShoppingBag /> Buy Now
+          </Button>
+        </div>
+      </CardFooter>
     </Card>
   );
 }
