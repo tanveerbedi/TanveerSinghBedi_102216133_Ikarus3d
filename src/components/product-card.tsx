@@ -1,17 +1,30 @@
+'use client';
 import Link from 'next/link';
 import Image from 'next/image';
 import type { Product } from '@/lib/types';
 import { Card, CardContent, CardFooter, CardHeader } from '@/components/ui/card';
 import { Badge } from '@/components/ui/badge';
+import { Button } from '@/components/ui/button';
+import { ShoppingCart, ShoppingBag } from 'lucide-react';
+import { useCart } from '@/hooks/use-cart';
+import { useRouter } from 'next/navigation';
 
 interface ProductCardProps {
   product: Product;
 }
 
 export function ProductCard({ product }: ProductCardProps) {
+  const { addToCart } = useCart();
+  const router = useRouter();
+
+  const handleBuyNow = () => {
+    addToCart(product, 1);
+    router.push('/checkout');
+  };
+
   return (
-    <Link href={`/products/${product.id}`} className="group block h-full">
-      <Card className="h-full flex flex-col overflow-hidden transition-shadow duration-300 hover:shadow-xl rounded-lg">
+    <Card className="h-full flex flex-col overflow-hidden transition-shadow duration-300 hover:shadow-xl rounded-lg">
+      <Link href={`/products/${product.id}`} className="group block">
         <CardHeader className="p-0">
           <div className="relative aspect-[4/3] w-full overflow-hidden rounded-t-lg">
             <Image
@@ -29,10 +42,18 @@ export function ProductCard({ product }: ProductCardProps) {
           <h3 className="font-semibold text-lg leading-tight truncate font-headline">{product.name}</h3>
           <p className="text-sm text-muted-foreground">{product.brand}</p>
         </CardContent>
-        <CardFooter className="p-4 pt-0">
-          <p className="font-semibold text-lg">${product.price.toFixed(2)}</p>
+        <CardFooter className="p-4 pt-0 flex flex-col items-start space-y-4">
+          <p className="font-semibold text-lg w-full">${product.price.toFixed(2)}</p>
+          <div className="w-full grid grid-cols-2 gap-2">
+            <Button variant="outline" onClick={() => addToCart(product, 1)}>
+              <ShoppingCart className="mr-2 h-4 w-4" /> Add to Cart
+            </Button>
+            <Button className="btn-cta" onClick={handleBuyNow}>
+              <ShoppingBag className="mr-2 h-4 w-4" /> Buy Now
+            </Button>
+          </div>
         </CardFooter>
-      </Card>
-    </Link>
+      </Link>
+    </Card>
   );
 }

@@ -1,24 +1,51 @@
+'use client';
 import { getProductById, getProductsByIds } from '@/lib/data';
-import { notFound } from 'next/navigation';
+import { notFound, useRouter } from 'next/navigation';
 import Image from 'next/image';
 import { Badge } from '@/components/ui/badge';
 import { Card } from '@/components/ui/card';
 import { Separator } from '@/components/ui/separator';
 import { ProductCard } from '@/components/product-card';
-import { CheckCircle2 } from 'lucide-react';
+import { CheckCircle2, ShoppingCart, ShoppingBag } from 'lucide-react';
+import { useEffect, useState } from 'react';
+import type { Product } from '@/lib/types';
+import { Button } from '@/components/ui/button';
+import { useCart } from '@/hooks/use-cart';
 
 type Props = {
   params: { id: string };
 };
 
-export default async function ProductDetailPage({ params }: Props) {
-  const product = await getProductById(params.id);
+export default function ProductDetailPage({ params }: Props) {
+  const [product, setProduct] = useState<Product | null>(null);
+  const [similarProducts, setSimilarProducts] = useState<Product[]>([]);
+  const { addToCart } = useCart();
+  const router = useRouter();
+
+  useEffect(() => {
+    const fetchProduct = async () => {
+      const p = await getProductById(params.id);
+      if (!p) {
+        notFound();
+      }
+      setProduct(p);
+
+      if (p.similar_ids && p.similar_ids.length > 0) {
+        const sp = await getProductsByIds(p.similar_ids);
+        setSimilarProducts(sp);
+      }
+    };
+    fetchProduct();
+  }, [params.id]);
 
   if (!product) {
-    notFound();
+    return <div>Loading...</div>; // Or a skeleton loader
   }
 
-  const similarProducts = product.similar_ids ? await getProductsByIds(product.similar_ids) : [];
+  const handleBuyNow = () => {
+    addToCart(product, 1);
+    router.push('/checkout');
+  };
 
   return (
     <div className="container mx-auto max-w-5xl py-12 px-4">
@@ -45,6 +72,15 @@ export default async function ProductDetailPage({ params }: Props) {
           </div>
           <p className="text-4xl font-bold">${product.price.toFixed(2)}</p>
           
+          <div className="flex items-center gap-2">
+            <Button variant="outline" size="lg" className="flex-1" onClick={() => addToCart(product, 1)}>
+              <ShoppingCart className="mr-2 h-4 w-4" /> Add to Cart
+            </Button>
+            <Button size="lg" className="flex-1 btn-cta" onClick={handleBuyNow}>
+              <ShoppingBag className="mr-2 h-4 w-4" /> Buy Now
+            </Button>
+          </div>
+
           <Separator />
 
           <div>

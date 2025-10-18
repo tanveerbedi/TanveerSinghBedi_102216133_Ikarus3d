@@ -3,6 +3,7 @@ import { useAuth } from '@/lib/auth';
 import { useRouter, usePathname } from 'next/navigation';
 import { useEffect, type ReactNode } from 'react';
 import Link from 'next/link';
+import Image from 'next/image';
 import {
   SidebarProvider,
   Sidebar,
@@ -18,7 +19,6 @@ import {
   BarChart3,
   Package,
   FileUp,
-  Sofa,
   Loader2,
 } from 'lucide-react';
 import { UserNav } from '@/components/user-nav';
@@ -74,8 +74,8 @@ function AdminSidebar() {
     <Sidebar collapsible="icon">
       <SidebarHeader>
         <Link href="/" className="flex items-center gap-2">
-          <Sofa className="w-6 h-6 shrink-0" />
-          <span className="font-semibold text-lg font-headline">Furniture Co.</span>
+          <Image src="/a8a5e093-6819-4645-9c0c-c22e69f55a0e.png" alt="FurniVerse logo" width={24} height={24} />
+          <span className="font-semibold text-lg font-headline">FurniVerse</span>
         </Link>
       </SidebarHeader>
       <SidebarContent>
