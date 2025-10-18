@@ -2,7 +2,6 @@
 
 import Link from 'next/link';
 import { usePathname } from 'next/navigation';
-import Image from 'next/image';
 
 import { cn } from '@/lib/utils';
 import { Sofa, ShoppingCart } from 'lucide-react';
@@ -50,7 +49,7 @@ export function MainNav({
       {...props}
     >
       <Link href="/" className="flex items-center space-x-2 mr-6">
-        <Image src="/a8a5e093-6819-4645-9c0c-c22e69f55a0e.png" alt="FurniVerse logo" width={32} height={32} />
+        <Sofa className="h-8 w-8" />
         <span className="font-bold inline-block font-headline text-lg">FurniVerse</span>
       </Link>
       <div className="hidden md:flex items-center space-x-4 lg:space-x-6 flex-1">
