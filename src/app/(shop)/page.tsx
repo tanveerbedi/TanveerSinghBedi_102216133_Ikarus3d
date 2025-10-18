@@ -9,8 +9,8 @@ import { PlaceHolderImages } from '@/lib/placeholder-images';
 import { CategoryShowcase } from '@/components/category-showcase';
 import { TrendingCarousel } from '@/components/trending-carousel';
 import { Newsletter } from '@/components/newsletter';
-import { FloatingChat } from '@/components/floating-chat';
 import { Footer } from '@/components/footer';
+import { Card, CardContent, CardHeader } from '@/components/ui/card';
 
 export default async function Home() {
   const allProducts = await getProducts();
@@ -54,7 +54,9 @@ export default async function Home() {
                         </Link>
                     </div>
                 </div>
-                {/* The ChatRecommendations component is now rendered via FloatingChat */}
+                <Card className="overflow-hidden shadow-2xl rounded-2xl animate-fade-in-up" style={{ animationDelay: '0.2s' }}>
+                  <ChatRecommendations />
+                </Card>
             </div>
         </div>
       </section>
@@ -108,8 +110,6 @@ export default async function Home() {
       <Newsletter />
 
       <Footer />
-
-      <FloatingChat />
     </>
   );
 }
