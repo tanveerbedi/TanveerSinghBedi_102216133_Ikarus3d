@@ -1,18 +1,18 @@
-import { ProductCard } from '@/components/product-card';
-import { getProducts } from '@/lib/data';
 
-export default async function ProductsPage() {
-  const products = await getProducts();
+'use client';
+import { CategoryTabs } from '@/components/CategoryTabs';
+import { SectionGrid } from '@/components/SectionGrid';
 
+export default function ProductsPage() {
   return (
-    <div className="container mx-auto py-8 px-4">
-      <h1 className="text-3xl font-bold tracking-tight mb-8 font-headline">All Products</h1>
-      {/* Filters would go here in a real application */}
-      <div className="grid grid-cols-1 gap-6 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4">
-        {products.map((product) => (
-          <ProductCard key={product.id} product={product} />
-        ))}
+    <main className="px-6 md:px-10 py-6">
+      <h1 id="top" className="text-3xl md:text-4xl font-bold mb-4">All Products</h1>
+      <CategoryTabs />
+      <div className="space-y-12 mt-6">
+        <SectionGrid categoryKey="tables" title="Tables" anchor="tables" />
+        <SectionGrid categoryKey="sofas" title="Sofas" anchor="sofas" />
+        <SectionGrid categoryKey="chairs" title="Chairs" anchor="chairs" />
       </div>
-    </div>
+    </main>
   );
 }
