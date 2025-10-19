@@ -1,18 +1,27 @@
-
 'use client';
-import { CategoryTabs } from '@/components/CategoryTabs';
-import { SectionGrid } from '@/components/SectionGrid';
+
+import { Suspense } from 'react';
+import { useSearchParams } from 'next/navigation';
+import ProductGrid from '@/components/ProductGrid'; // adjust as per your component
+
+export const dynamic = 'force-dynamic'; // prevent static build errors
+
+function ProductsContent() {
+  const searchParams = useSearchParams();
+  const query = searchParams.get('q');
+
+  return (
+    <section className="px-6 md:px-10 py-8">
+      <h1 className="text-3xl font-semibold mb-4">All Products</h1>
+      <ProductGrid query={query || ''} />
+    </section>
+  );
+}
 
 export default function ProductsPage() {
   return (
-    <main className="px-6 md:px-10 py-6">
-      <h1 id="top" className="text-3xl md:text-4xl font-bold mb-4">All Products</h1>
-      <CategoryTabs />
-      <div className="space-y-12 mt-6">
-        <SectionGrid categoryKey="tables" title="Tables" anchor="tables" />
-        <SectionGrid categoryKey="sofas" title="Sofas" anchor="sofas" />
-        <SectionGrid categoryKey="chairs" title="Chairs" anchor="chairs" />
-      </div>
-    </main>
+    <Suspense fallback={<div className="text-center py-10">Loading products...</div>}>
+      <ProductsContent />
+    </Suspense>
   );
 }
